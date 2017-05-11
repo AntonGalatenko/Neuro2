@@ -2,51 +2,59 @@ import java.io.*;
 
 public class NeuralNetwork {
 
-    private Neuron[] neurons;
+    private NeuronHide[] neuronsHide;
+    private NeuronOutput[] neuronsOutput;
 
-    public NeuralNetwork(){
-        neurons = new Neuron[10];
+    public NeuralNetwork(int numberOutputNeurons, int numberHideNeurons){
+        neuronsHide = new NeuronHide[numberHideNeurons];
+        neuronsOutput = new NeuronOutput[numberOutputNeurons];
 
-        for(int i = 0; i < neurons.length; i++)
-            neurons[i] = new Neuron();
+        for(int i = 0; i < neuronsOutput.length; i++)
+            neuronsOutput[i] = new NeuronOutput(neuronsHide.length);
+
+        for(int i = 0; i < neuronsHide.length; i++)
+            neuronsHide[i] = new NeuronHide();
     }
 
-    public int[] handleHard(int[][] input){
-        int[] output = new int[neurons.length];
+    public double[] handleOutput(double[] input){
+        double[] output = new double[neuronsOutput.length];
         for(int i = 0; i < output.length; i++)
-            output[i] = neurons[i].transferHard(input);
+            output[i] = neuronsOutput[i].transfer(input);
 
         return output;
     }
 
-    public int[] handle(int[][] input){
-        int[] output = new int[neurons.length];
+    public double[] handleHide(int[][] input){
+        double[] output = new double[neuronsHide.length];
         for(int i = 0; i < output.length; i++)
-            output[i] = neurons[i].transfer(input);
-
+            output[i] = neuronsHide[i].transfer(input);
         return output;
     }
 
     public void study(int[][] input, int correctAnswer){
-        int[] correctOutput = new int[neurons.length];
-        correctOutput[correctAnswer] = 1;
+        double[] correctOutput = new double[neuronsOutput.length];
+        correctOutput[correctAnswer] = 1.0;
         int n = 1;
 
-        int[] output = handleHard(input);
+        double[] outputHide = handleHide(input);
+        double[] output = handleOutput(outputHide);
+
+
+
         while (! compareArrays(correctOutput, output)){
             for(int i = 0; i < neurons.length; i++){
-                int dif = correctOutput[i] - output[i];
+//                double dif = correctOutput[i] - output[i];
+                double dif = Math.pow((correctOutput[i] - output[i]), 2);
                 neurons[i].changeWeights(input, dif);
             }
-            output = handleHard(input);
+            output = handle(input);
             n++;
         }
         System.out.println("iteration " + n);
         System.out.println("___________________");
-
     }
 
-    private boolean compareArrays(int[] correctOutput, int[] output) {
+    private boolean compareArrays(double[] correctOutput, double[] output) {
         if(correctOutput.length != output.length)
             return false;
 
@@ -58,14 +66,14 @@ public class NeuralNetwork {
     }
 
     public void printWeight(){
-        for(Neuron n : neurons)
+        for(NeuronHide n : neurons)
             System.out.println(n.printWeight());
     }
 
     public String getAnswer(int[][] input){
-        int[] answer = handle(input);
+        double[] answer = handle(input);
         String result = "";
-        for(int i : answer)
+        for(double i : answer)
             result = result + " " + i + " ";
         return result;
     }
