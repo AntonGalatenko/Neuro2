@@ -1,12 +1,13 @@
 public class NeuronOutput {
 
-    private int[] weight;
+    private double[] weight;
+    private double[] deltaWeight;
 //    private int numberWeight;
 
     public NeuronOutput(int numberWeight){
 //        this.numberWeight = numberWeight;
-        weight = new int[numberWeight];
-//        randomizeWeight();
+        weight = new double[numberWeight];
+        randomizeWeight();
     }
 
     public void randomizeWeight() {
@@ -54,42 +55,46 @@ public class NeuronOutput {
 //            return (int)Math.round(1/(1 + Math.exp(-power)));
 //    }
 
-    public void changeWeights(int [][] input, int d){
-        for(int i = 0; i < w; i++)
-            for(int j = 0; j < h; j++)
-                weight[i][j] += d * input[i][j];
-    }
+//    public void changeWeights(int [][] input, int d){
+//        for(int i = 0; i < w; i++)
+//            for(int j = 0; j < h; j++)
+//                weight[i][j] += d * input[i][j];
+//    }
 
     public StringBuilder printWeight(){
         StringBuilder result = new StringBuilder();
         result.append("****************************\n");
 
-        int j = 0;
-        while (j < h){
-            for(int i = 0; i < w; i++)
-                result.append(weight[i][j] + "  ");
+        for(int i = 0; i < weight.length; i++){
+            result.append(weight[i] + "  ");
 
-            result.append("\n");
-            j++;
         }
         result.setLength(result.length() - 1);
 
         return result;
     }
+//
+//    public int[][] getWeight() {
+//        return weight;
+//    }
+//
+//    public void setWeight(int i, int j, int weight) {
+//        this.weight[i][j] = weight;
+//    }
 
-    public int[][] getWeight() {
+    public double[] getWidth() {
         return weight;
     }
 
-    public void setWeight(int i, int j, int weight) {
-        this.weight[i][j] = weight;
+//    public void setDeltaWeight(double[] deltaWeight) {
+//        this.deltaWeight = deltaWeight;
+//    }
+
+    public double[] getDeltaWidth() {
+        return weight;
     }
 
-    public int getWidth() {
-        return w;
-    }
-
-    public int getHeight() {
-        return h;
-    }
+//    public int getHeight() {
+//        return h;
+//    }
 }
