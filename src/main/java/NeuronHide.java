@@ -31,7 +31,7 @@ public class NeuronHide {
         else if(power > 10)
             return 1;
         else
-            return 1/(1 + Math.exp(-power));
+            return 1 / (1 + Math.exp(-power));
     }
 
     public void changeWeights(int [][] input, int d){
@@ -42,10 +42,10 @@ public class NeuronHide {
 
     public StringBuilder printWeight(){
         StringBuilder result = new StringBuilder();
-        result.append("****************************\n");
+//        result.append("****************************\n");
 
-        for(int i = 0; i < weightParsing.length; i++){
-            result.append(weightParsing[i] + "  ");
+        for(int i = 0; i < 5; i++){
+            result.append(weightParsing[i] + "  " + weightParsing[i + 5] + " " + weightParsing[i + 10] + "\n");
 
         }
         result.setLength(result.length() - 1);
@@ -65,6 +65,7 @@ public class NeuronHide {
             result.append("\n");
             j++;
         }
+        result.append("\n");
         result.setLength(result.length() - 1);
 
         return result;
@@ -77,12 +78,20 @@ public class NeuronHide {
                 weightParsing [n++] = weight[i][j];
     }
 
+    public void addWeightParsing(int i, double value) {
+        weightParsing[i] += value;
+    }
+
     public double[] getWeightParsing(){
         return weightParsing;
     }
 
     public double[][] getWeight() {
         return weight;
+    }
+
+    public void setDeltaWeightParsing(int i, double value) {
+        deltaWeightParsing[i] = value;
     }
 
     public double[] getDeltaWeight() {

@@ -7,6 +7,7 @@ public class NeuronOutput {
     public NeuronOutput(int numberWeight){
 //        this.numberWeight = numberWeight;
         weight = new double[numberWeight];
+        deltaWeight = new double[numberWeight];
         randomizeWeight();
     }
 
@@ -63,7 +64,7 @@ public class NeuronOutput {
 
     public StringBuilder printWeight(){
         StringBuilder result = new StringBuilder();
-        result.append("****************************\n");
+//        result.append("****************************\n");
 
         for(int i = 0; i < weight.length; i++){
             result.append(weight[i] + "  ");
@@ -78,19 +79,27 @@ public class NeuronOutput {
 //        return weight;
 //    }
 //
-//    public void setWeight(int i, int j, int weight) {
-//        this.weight[i][j] = weight;
-//    }
 
-    public double[] getWidth() {
+    public void addWeight(int i, double value) {
+        weight[i] += value;
+    }
+
+    public double[] getWeight() {
         return weight;
+    }
+
+    public double getWeight(int i) {
+        return weight[i];
     }
 
 //    public void setDeltaWeight(double[] deltaWeight) {
 //        this.deltaWeight = deltaWeight;
 //    }
+    public void setDeltaWeight(int i, double value) {
+        deltaWeight[i] = value;
+    }
 
-    public double[] getDeltaWidth() {
+    public double[] getDeltaWeight() {
         return weight;
     }
 
