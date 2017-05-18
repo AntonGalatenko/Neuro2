@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.Random;
 
 public class Main {
-    static final File FILE = new File("D:\\NeuronImg\\img");
-    static final String WEIGHT_FILE_PATH = "D:\\NeuronImg\\neuron2Weight.txt";
+    static final File FILE = new File("NeuronImg\\img");
+    static final String WEIGHT_FILE_PATH = "NeuronImg\\neuron2Weight.txt";
     static final double E = 0.7;        //Скорость обучения
     static final double A = 0.3;        //Момент
 

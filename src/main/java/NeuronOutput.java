@@ -12,11 +12,11 @@ public class NeuronOutput {
 
     public void randomizeWeight() {
         for(int i = 0; i < weight.length; i++)
-            weight[i] = (int)((Math.random() * 9) + 1);
+            weight[i] = Math.round(Math.random() * 100.0) / 100.0;
     }
 
     public double transfer(double[] input){
-        int power = 0;
+        double power = 0;
 
         for(int i = 0; i < weight.length; i++)
             power += weight[i] * input[i];

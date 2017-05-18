@@ -32,47 +32,68 @@ public class NeuralNetwork {
 
     public void study(int[][] input, int correctAnswer){
 
-        System.out.println("neuronsOutput weight");
-        for (int i = 0; i < neuronsOutput.length; i++)
-            System.out.println(neuronsOutput[i].printWeight());
+//        System.out.println("neuronsOutput weight");
+//        for (int i = 0; i < neuronsOutput.length; i++)
+//            System.out.println(neuronsOutput[i].printWeight());
 
-//        System.out.println("neuronsHide weight");
+//        System.out.println("input neurons");
+//        int jj = 0;
+//        while (jj < input[0].length){
+//            for(int ii = 0; ii < input.length; ii++)
+//                System.out.print(input[ii][jj] + "  ");
+//
+//            System.out.println();
+//            jj++;
+//        }
+//
+//        System.out.println();
+//
+        System.out.println("neuronsHide 0 weight");
+        System.out.println(neuronsHide[0].printWeightTrue());
+        System.out.println();
 //        for (int i = 0; i < neuronsHide.length; i++)
-//            System.out.println(neuronsHide[i].printWeight());
+//            System.out.println(neuronsHide[i].printWeightTrue());
 
         double[] correctOutput = new double[neuronsOutput.length];
         correctOutput[correctAnswer] = 1.0;
-//        int n = 1;
+        int n = 0;
 
         double[] outputHide = handleHide(input);
         double[] output = handleOutput(outputHide);
 
+//        System.out.println();
+//        System.out.println("neuron hide out " + outputHide[0]);
+//
+//        System.out.println();
+//        System.out.println("neuron output " + output[0]);
+
         for(int i = 0; i < output.length; i++){
             double error = Math.pow((correctOutput[i] - output[i]), 2);
-            System.out.println("Error " + i + " - " + error + " (" + output[i] + " | " + correctOutput[i] + ")");
+            System.out.println("Error " + i + " - " + String.format("%.2f", error) + " (" + output[i] + " | " + correctOutput[i] + ")");
         }
 
         double deltaOutput[] = new double[output.length];
-//        while (! compareArrays(correctOutput, output))
-        for(int b = 1; b < 5; b++){
+//        while (! compareArrays(correctOutput, output)){
+        for(int b = 1; b <= 1000; b++){
+
             for(int i = 0; i < output.length; i++){
-                double error = Math.pow((correctOutput[i] - output[i]), 2);
+//                double error = Math.pow((correctOutput[i] - output[i]), 2);
 //                    System.out.println("error " + error);
                 deltaOutput[i] = (correctOutput[i] - output[i]) * ((1 - output[i]) * output[i]);
-                    System.out.println("deltaOutput[" + i + "] " + deltaOutput[i]);
+//                    System.out.println("deltaOutput[" + i + "] " + deltaOutput[i]);
 
 //                neurons[i].changeWeights(input, dif);
             }
 //            output = handle(input);
-//            n++;
-        }
+            n++;
+//        }
 
         double sum[] = new double[outputHide.length];
         for(int i = 0; i < outputHide.length; i++){
             for(int j = 0; j < outputHide.length; j++){
                 sum[i] += (deltaOutput[j] * neuronsOutput[j].getWidth()[i]);
             }
-                System.out.println("sum[" + i + "] " + sum[i]);
+//                System.out.println("sum[" + i + "] " + sum[i]);
 
         }
 
@@ -81,12 +102,12 @@ public class NeuralNetwork {
         double[] gradSynapseFromOutputToHide = new double[output.length];
         double deltaWeightFromOutputToHide = 0;
 //        while (! compareArrays(correctOutput, outputHide)){
-        for(int b = 1; b < 5; b++){
+//        for(int b = 1; b < 50; b++){
             for(int i = 0; i < output.length; i++){
 //                double error = Math.pow((correctOutput[i] - output[i]), 2);
 //                System.out.println("error " + error);
                 deltaHide[i] = ((1 - outputHide[i]) * outputHide[i]) * sum[i];
-                    System.out.println("delta " + deltaHide[i]);
+//                    System.out.println("delta " + deltaHide[i]);
 
                 for(int j = 0; j < neuronsOutput[0].getWidth().length; j++){
                     gradSynapseFromOutputToHide[j] = outputHide[i] * deltaOutput[j];
@@ -107,22 +128,40 @@ public class NeuralNetwork {
                     neuronsHide[j].getDeltaWeight()[j] = deltaWeightFromHideToInput;
                 }
             }
+
+            outputHide = handleHide(input);
+            output = handleOutput(outputHide);
+
+            String o = "";
+            String co = "";
+
+            for(int iq = 0; iq < output.length; iq++){
+                o += output[iq] + " ";
+                co += correctOutput[iq] + " ";
+            }
+//            System.out.println(n + " [" + o + "] [" + co + "]");
+
+            System.out.println(neuronsHide[0].printWeightTrue());
+            System.out.println("---------------------------------------------");
+
         }
 
-//        System.out.println("iteration " + n);
-//        System.out.println("___________________");
+        System.out.println("iteration " + n);
+        System.out.println("___________________");
 
         outputHide = handleHide(input);
         output = handleOutput(outputHide);
 
+        System.out.println();
+
         for(int i = 0; i < output.length; i++){
             double error = Math.pow((correctOutput[i] - output[i]), 2);
-            System.out.println("Error " + i + " - " + error + " (" + output[i] + " | " + correctOutput[i] + ")");
+            System.out.println("Error " + i + " - " + String.format("%.2f", error) + " (" + output[i] + " | " + correctOutput[i] + ")");
         }
 
-                System.out.println("changed neuronsOutput weight");
-        for (int i = 0; i < neuronsOutput.length; i++)
-            System.out.println(neuronsOutput[i].printWeight());
+//                System.out.println("changed neuronsOutput weight");
+//        for (int i = 0; i < neuronsOutput.length; i++)
+//            System.out.println(neuronsOutput[i].printWeight());
 
 //        System.out.println("changed neuronsHide weight");
 //        for (int i = 0; i < neuronsHide.length; i++)

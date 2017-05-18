@@ -1,6 +1,6 @@
 public class NeuronHide {
 
-    private int[][] weight;
+    private double[][] weight;
 //    private int limit = 200;
     private int w = 3;
     private int h = 5;
@@ -8,7 +8,7 @@ public class NeuronHide {
     private double[] deltaWeightParsing = new double[15];
 
     public NeuronHide(){
-        weight = new int[w][h];
+        weight = new double[w][h];
         randomizeWeight();
         parsingWeight();
     }
@@ -16,11 +16,11 @@ public class NeuronHide {
     public void randomizeWeight() {
         for(int i = 0; i < w; i++)
             for(int j = 0; j < h; j++)
-                weight[i][j] = (int)((Math.random() * 9) + 1);
+                weight[i][j] = Math.round(Math.random() * 100.0) / 100.0;
     }
 
     public double transfer(int[][] input){
-        int power = 0;
+        double power = 0;
 
         for(int i = 0; i < w; i++)
             for(int j = 0; j < h; j++)
@@ -53,6 +53,23 @@ public class NeuronHide {
         return result;
     }
 
+    public StringBuilder printWeightTrue(){
+        StringBuilder result = new StringBuilder();
+//        result.append("****************************\n");
+
+        int j = 0;
+        while (j < h){
+            for(int i = 0; i < w; i++)
+                result.append(weight[i][j] + "  ");
+
+            result.append("\n");
+            j++;
+        }
+        result.setLength(result.length() - 1);
+
+        return result;
+    }
+
     private void parsingWeight(){
         int n = 0;
         for(int i = 0; i < weight.length; i++)
@@ -64,7 +81,7 @@ public class NeuronHide {
         return weightParsing;
     }
 
-    public int[][] getWeight() {
+    public double[][] getWeight() {
         return weight;
     }
 
