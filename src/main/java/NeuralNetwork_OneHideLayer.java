@@ -115,11 +115,11 @@ public class NeuralNetwork_OneHideLayer {
             for(int i = 0; i < outputHide.length; i++){
                 deltaHide[i] = ((1 - outputHide[i]) * outputHide[i]) * sum[i];
 //                System.out.println("deltaHide[" + i + "] " + deltaHide[i]);
-                for(int j = 0; j < neuronsHide[0].getWeightParsing().length; j++){
+                for(int j = 0; j < neuronsHide[0].getWeight().length; j++){
                     gradSynapseFromHideToInput = input[j] * deltaHide[i];
                     deltaWeightFromHideToInput = Main.E * gradSynapseFromHideToInput + Main.A * neuronsHide[i].getDeltaWeight()[j];
-                    neuronsHide[i].addWeightParsing(j, deltaWeightFromHideToInput);
-                    neuronsHide[i].setDeltaWeightParsing(j, deltaWeightFromHideToInput);
+                    neuronsHide[i].addWeight(j, deltaWeightFromHideToInput);
+                    neuronsHide[i].setDeltaWeight(j, deltaWeightFromHideToInput);
 
 //                    System.out.println("input " + input[j]);
 //                    System.out.println("gradSynapseFromHideToInput " + gradSynapseFromHideToInput + "  | deltaWeightFromHideToInput " + deltaWeightFromHideToInput);

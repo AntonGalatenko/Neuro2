@@ -4,7 +4,6 @@ public class NeuronOutput {
     private double[] deltaWeight;
 
     public NeuronOutput(int numberWeight){
-//        this.numberWeight = numberWeight;
         weight = new double[numberWeight];
         deltaWeight = new double[numberWeight];
         randomizeWeight();
