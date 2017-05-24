@@ -147,7 +147,7 @@ public class NeuralNetwork_OneHideLayer {
 //                System.out.println("Error " + i + " - " + error[i] + " (" + output[i] + " | " + correctOutput[i] + ")");
             }
 
-            if(n > 150){
+            if(n > 100){
                 System.out.println();
                 System.out.println();
                 for(int i =0; i < output.length; i++)
@@ -192,7 +192,7 @@ public class NeuralNetwork_OneHideLayer {
 
     private boolean isError(double[] error){
         for (int i = 0; i < error.length; i++)
-            if(error[i] > 0.1)
+            if(error[i] > 0.01)
                 return true;
         return false;
     }

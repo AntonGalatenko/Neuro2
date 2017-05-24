@@ -28,6 +28,21 @@ public class NeuronHide {
             return 1 / (1 + Math.exp(-power));
     }
 
+    public double transfer(double[] input){
+        double power = 0;
+
+        for(int i = 0; i < input.length; i++)
+            power += weight[i] * input[i];
+
+        if(power < -10)
+            return 0;
+        else if(power > 10)
+            return 1;
+        else
+//            return (Math.exp(2 * power) - 1) / (Math.exp(2 * power) + 1);
+            return 1 / (1 + Math.exp(-power));
+    }
+
     public double transfer1(int[] input){
         double power = 0;
 

@@ -7,11 +7,12 @@ import java.util.Random;
 public class Main {
     static final File FILE = new File("NeuronImg\\img");
     static final String WEIGHT_FILE_PATH = "NeuronImg\\neuron2Weight.txt";
-    static final double E = 0.9;        //Скорость обучения 0.7
-    static final double A = 0.5;        //Момент 0.3
+    static final double E = 0.8;        //Скорость обучения 0.7
+    static final double A = 0.7;        //Момент 0.3
 
     public static void main(String[] args) {
-        oneHideLayer();
+        manyHideLayer(2);
+//        oneHideLayer();
 //        noHideLayer();
 //
 //        Random random = new Random();
@@ -49,39 +50,14 @@ public class Main {
 
         neuralNetworkNoHideLayer.printNeuronHideWeight();
 
-        neuralNetworkNoHideLayer.study(loadIMG(files[0]), 0);
-        System.out.println("-- 0");
-        neuralNetworkNoHideLayer.printError();
-        neuralNetworkNoHideLayer.study(loadIMG(files[1]), 1);
-        System.out.println("-- 1");
-        neuralNetworkNoHideLayer.printError();
-        neuralNetworkNoHideLayer.study(loadIMG(files[2]), 2);
-        System.out.println("-- 2");
-        neuralNetworkNoHideLayer.printError();
-        neuralNetworkNoHideLayer.study(loadIMG(files[3]), 3);
-        System.out.println("-- 3");
-        neuralNetworkNoHideLayer.printError();
-        neuralNetworkNoHideLayer.study(loadIMG(files[4]), 4);
-        System.out.println("-- 4");
-        neuralNetworkNoHideLayer.printError();
-        neuralNetworkNoHideLayer.study(loadIMG(files[5]), 5);
-        System.out.println("-- 5");
-        neuralNetworkNoHideLayer.printError();
-        neuralNetworkNoHideLayer.study(loadIMG(files[6]), 6);
-        System.out.println("-- 6");
-        neuralNetworkNoHideLayer.printError();
-        neuralNetworkNoHideLayer.study(loadIMG(files[7]), 7);
-        System.out.println("-- 7");
-        neuralNetworkNoHideLayer.printError();
-        neuralNetworkNoHideLayer.study(loadIMG(files[8]), 8);
-        System.out.println("-- 8");
-        neuralNetworkNoHideLayer.printError();
-        neuralNetworkNoHideLayer.study(loadIMG(files[9]), 9);
-        System.out.println("-- 9");
-        neuralNetworkNoHideLayer.printError();
+        for(int i = 0; i < files.length; i++){
+            neuralNetworkNoHideLayer.study(loadIMG(files[i]), i);
+            System.out.println("-- i");
+            neuralNetworkNoHideLayer.printError();
+        }
 
         System.out.println();
-        System.out.println("k " + k + " time " + time);
+        System.out.println("k " + (k - 200) + " time " + time);
         System.out.println();
     }
 
@@ -97,8 +73,10 @@ public class Main {
         while (n < 200){
             k++;
             int rnd = random.nextInt(files.length);
-            System.out.print(k + "   | " + rnd + " ");
-            isStudying = neuralNetworkOneHideLayer.study(loadIMG(files[rnd]), rnd);
+            char fileName = files[rnd].getName().charAt(0);
+            System.out.print(k + "   | " + fileName + " ");
+//            System.out.println("file name " + fileName);
+            isStudying = neuralNetworkOneHideLayer.study(loadIMG(files[rnd]), Character.getNumericValue(fileName));
             if(isStudying)
                 n++;
             else
@@ -110,39 +88,52 @@ public class Main {
 
         neuralNetworkOneHideLayer.printNeuronHideWeight();
 
-        neuralNetworkOneHideLayer.study(loadIMG(files[0]), 0);
-        System.out.println("-- 0");
-        neuralNetworkOneHideLayer.printError();
-        neuralNetworkOneHideLayer.study(loadIMG(files[1]), 1);
-        System.out.println("-- 1");
-        neuralNetworkOneHideLayer.printError();
-        neuralNetworkOneHideLayer.study(loadIMG(files[2]), 2);
-        System.out.println("-- 2");
-        neuralNetworkOneHideLayer.printError();
-        neuralNetworkOneHideLayer.study(loadIMG(files[3]), 3);
-        System.out.println("-- 3");
-        neuralNetworkOneHideLayer.printError();
-        neuralNetworkOneHideLayer.study(loadIMG(files[4]), 4);
-        System.out.println("-- 4");
-        neuralNetworkOneHideLayer.printError();
-        neuralNetworkOneHideLayer.study(loadIMG(files[5]), 5);
-        System.out.println("-- 5");
-        neuralNetworkOneHideLayer.printError();
-        neuralNetworkOneHideLayer.study(loadIMG(files[6]), 6);
-        System.out.println("-- 6");
-        neuralNetworkOneHideLayer.printError();
-        neuralNetworkOneHideLayer.study(loadIMG(files[7]), 7);
-        System.out.println("-- 7");
-        neuralNetworkOneHideLayer.printError();
-        neuralNetworkOneHideLayer.study(loadIMG(files[8]), 8);
-        System.out.println("-- 8");
-        neuralNetworkOneHideLayer.printError();
-        neuralNetworkOneHideLayer.study(loadIMG(files[9]), 9);
-        System.out.println("-- 9");
-        neuralNetworkOneHideLayer.printError();
+        for(int i = 0; i < files.length; i++){
+            neuralNetworkOneHideLayer.study(loadIMG(files[i]), Character.getNumericValue(files[i].getName().charAt(0)));
+            System.out.println("-- " + files[i].getName());
+            neuralNetworkOneHideLayer.printError();
+        }
 
         System.out.println();
-        System.out.println("k " + k + " time " + time);
+        System.out.println("k " + (k - 200) + " time " + time);
+        System.out.println();
+    }
+
+    private static void manyHideLayer(int numberHideLayer){
+        NeuralNetwork_ManyHideLayer neuralNetworkManyHideLayer = new NeuralNetwork_ManyHideLayer(10, numberHideLayer);
+        Random random = new Random();
+        File[] files = FILE.listFiles();
+
+        boolean isStudying;
+        int n = 0;
+        int k = 0;
+        long start = System.currentTimeMillis();
+        while (n < 200){
+            k++;
+            int rnd = random.nextInt(files.length);
+            char fileName = files[rnd].getName().charAt(0);
+            System.out.print(k + "   | " + fileName + " ");
+//            System.out.println("file name " + fileName);
+            isStudying = neuralNetworkManyHideLayer.study(loadIMG(files[rnd]), Character.getNumericValue(fileName));
+            if(isStudying)
+                n++;
+            else
+                n = 0;
+        }
+        long time = (System.currentTimeMillis() - start) / 1000;
+
+        System.out.println();
+
+        neuralNetworkManyHideLayer.printNeuronHideWeight();
+
+        for(int i = 0; i < files.length; i++){
+            neuralNetworkManyHideLayer.study(loadIMG(files[i]), Character.getNumericValue(files[i].getName().charAt(0)));
+            System.out.println("-- " + files[i].getName());
+            neuralNetworkManyHideLayer.printError();
+        }
+
+        System.out.println();
+        System.out.println("k " + (k - 200) + " time " + time);
         System.out.println();
     }
 
