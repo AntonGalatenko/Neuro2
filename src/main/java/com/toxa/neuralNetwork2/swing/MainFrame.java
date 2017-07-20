@@ -1,15 +1,20 @@
 package com.toxa.neuralNetwork2.swing;
 
+import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork;
+import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_OneHideLayer;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class MainFrame extends  JFrame{
 
+    private NeuralNetwork neuralNetwork;
     private ImageIcon imageIcon;
     private MyFileChooser myFileChooser;
     private JPanel mainPanel;
@@ -22,6 +27,9 @@ public class MainFrame extends  JFrame{
 
     public MainFrame() {
         setTitle("Neural Network 2");
+
+        neuralNetwork = new NeuralNetwork_OneHideLayer(10);
+        neuralNetwork.loadWeight();
 
         button1.addActionListener(new ActionListener() {
             @Override
@@ -38,9 +46,13 @@ public class MainFrame extends  JFrame{
                 imageLabel.setIcon(imageIcon);
                 pack();
                 revalidate();
+
+                int[] img = loadIMG(myFileChooser.getPath());
+                String result = neuralNetwork.getResult(img);
+                resultLabel.setText("Результат: " + result);
+
             }
         });
-
 
 
 
@@ -48,5 +60,31 @@ public class MainFrame extends  JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
+    }
+
+    private int[] loadIMG(String path){
+        File file = new File(path);
+        int[] result = new int[15];
+
+        try {
+            BufferedImage img = ImageIO.read(file);
+
+            int k = 0;
+            int pixels;
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 5; j++){
+                    pixels = img.getRGB(i,j);
+
+                    int n = 0;
+                    if(pixels < - 100000)
+                        n = 1;
+
+                    result[k++] = n;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  result;
     }
 }

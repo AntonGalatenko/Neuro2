@@ -3,6 +3,7 @@ package com.toxa.neuralNetwork2;
 import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_ManyHideLayer;
 import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_NoHideLayer;
 import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_OneHideLayer;
+import com.toxa.neuralNetwork2.swing.MainFrame;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -18,10 +19,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        MainFrame mainFrame = new MainFrame();
-
+        MainFrame mainFrame = new MainFrame();
+//
 //        oneHideLayerFinal();
-        oneHideLayer();
+//        oneHideLayer();
 //        noHideLayer();
 //        manyHideLayer(2);
 //
@@ -118,9 +119,11 @@ public class Main {
         neuralNetworkOneHideLayer.loadWeight();
 
         for(int i = 0; i < files.length; i++){
-            neuralNetworkOneHideLayer.getResult(loadIMG(files[i]));
-            System.out.println("-- " + files[i].getName());
-            neuralNetworkOneHideLayer.printError();
+            System.out.print("<> " + files[i].getName() + "; result - ");
+            System.out.println(neuralNetworkOneHideLayer.getResult(loadIMG(files[i])));
+//            neuralNetworkOneHideLayer.getResult(loadIMG(files[i]));
+
+//            neuralNetworkOneHideLayer.printError();
         }
     }
 
