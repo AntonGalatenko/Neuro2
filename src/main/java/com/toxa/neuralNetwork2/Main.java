@@ -1,3 +1,9 @@
+package com.toxa.neuralNetwork2;
+
+import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_ManyHideLayer;
+import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_NoHideLayer;
+import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_OneHideLayer;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,21 +13,25 @@ import java.util.Random;
 public class Main {
     static final File FILE = new File("NeuronImg\\img");
     static final String WEIGHT_FILE_PATH = "NeuronImg\\neuron2Weight.txt";
-    static final double E = 0.8;        //Скорость обучения 0.7
-    static final double A = 0.7;        //Момент 0.3
+    static public final double E = 0.7;        //Скорость обучения 0.7
+    static public final double A = 0.3;        //Момент 0.3
 
     public static void main(String[] args) {
-        manyHideLayer(2);
-//        oneHideLayer();
+
+//        MainFrame mainFrame = new MainFrame();
+
+//        oneHideLayerFinal();
+        oneHideLayer();
 //        noHideLayer();
+//        manyHideLayer(2);
 //
 //        Random random = new Random();
 //        File[] files = FILE.listFiles();
 //        int rnd = random.nextInt(files.length);
 
-//        NeuralNetwork_NoHideLayer neuralNetwork = new NeuralNetwork_NoHideLayer(10);
-//        NeuralNetwork_OneHideLayer neuralNetwork = new NeuralNetwork_OneHideLayer(10);
-//        neuralNetwork.study(loadIMG(files[rnd]), rnd);
+//        com.toxa.neuralNetwork2.NeuralNetwork_NoHideLayereuralNetwork_NoHideLayer com.toxa.neuralNetwork2.neuralNetwork = new com.toxa.neuralNetwork2.neuralNetworkalNetwork2.NeuralNetwork_NoHideLayer(10);
+//        com.toxa.neuralNetwork2.neuralNetworkalNetwork2.NeuralNetwork_OneHideLayer com.toxa.neuralNetwork2.neuralNetwork = new com.toxa.neuralNetwork2.neuralNetworkalNetwork2.NeuralNetwork_OneHideLayer(10);
+//        com.toxa.neuralNetwork2.neuralNetwork.study(loadIMG(files[rnd]), rnd);
 
     }
 
@@ -97,6 +107,21 @@ public class Main {
         System.out.println();
         System.out.println("k " + (k - 200) + " time " + time);
         System.out.println();
+
+        neuralNetworkOneHideLayer.saveWeight();
+    }
+
+    private static void oneHideLayerFinal(){
+        NeuralNetwork_OneHideLayer neuralNetworkOneHideLayer = new NeuralNetwork_OneHideLayer(10);
+        File[] files = FILE.listFiles();
+
+        neuralNetworkOneHideLayer.loadWeight();
+
+        for(int i = 0; i < files.length; i++){
+            neuralNetworkOneHideLayer.getResult(loadIMG(files[i]));
+            System.out.println("-- " + files[i].getName());
+            neuralNetworkOneHideLayer.printError();
+        }
     }
 
     private static void manyHideLayer(int numberHideLayer){
