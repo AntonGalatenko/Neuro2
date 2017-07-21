@@ -5,6 +5,8 @@ import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_OneHideLayer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,8 +16,8 @@ import java.io.IOException;
 
 public class MainFrame extends  JFrame{
 
+    private String path;
     private NeuralNetwork neuralNetwork;
-    private ImageIcon imageIcon;
     private MyFileChooser myFileChooser;
     private JPanel mainPanel;
     private JLabel LeftLabel;
@@ -24,6 +26,8 @@ public class MainFrame extends  JFrame{
     private JLabel imageLabel;
     private JPanel leftBottomPanel;
     private JLabel resultLabel;
+    private JPanel listPanel;
+    private JList filesList;
 
     public MainFrame() {
         setTitle("Neural Network 2");
@@ -31,35 +35,66 @@ public class MainFrame extends  JFrame{
         neuralNetwork = new NeuralNetwork_OneHideLayer(10);
         neuralNetwork.loadWeight();
 
+        path = "D:\\MyJava\\workspace_Idea\\Neuro2\\NeuronImg\\img";
+        filesList.setModel(getListModel(path));
+
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                myFileChooser = new MyFileChooser();
-                Image image = null;
-                try {
-                    image = ImageIO.read(new File(myFileChooser.getPath()));
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                image = image.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
-                imageIcon = new ImageIcon(image);
-                imageLabel.setIcon(imageIcon);
-                pack();
-                revalidate();
-
-                int[] img = loadIMG(myFileChooser.getPath());
-                String result = neuralNetwork.getResult(img);
-                resultLabel.setText("Результат: " + result);
+                myFileChooser = new MyFileChooser(path);
+                path = myFileChooser.getPath();
+                filesList.setModel(getListModel(path));
 
             }
         });
 
+        filesList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if((! e.getValueIsAdjusting()) && (filesList.getSelectedValue() != null)){
+                        String p = path + "\\" + filesList.getSelectedValue();
+                        imageLabel.setIcon(getImgIcon(p));
+                        int[] img = loadIMG(p);
+                        String result = neuralNetwork.getResult(img);
+                        resultLabel.setText("Результат: " + result);
 
+
+                }
+            }
+        });
 
         add(mainPanel);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
+        revalidate();
+
+    }
+
+    private ImageIcon getImgIcon(String path){
+        Image image = null;
+        try {
+            image = ImageIO.read(new File(path));
+        } catch (IOException ex) {
+            System.out.println("path " + path);
+            ex.printStackTrace();
+        }
+        image = image.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+        return new ImageIcon(image);
+    }
+
+    private DefaultListModel getListModel(String path){
+        File file = new File(path);
+        if(file.isFile())
+            return null;
+
+        DefaultListModel result = new DefaultListModel();
+        File[] fileList = file.listFiles();
+
+        for(File f : fileList)
+            result.addElement(f.getName());
+
+        return result;
     }
 
     private int[] loadIMG(String path){

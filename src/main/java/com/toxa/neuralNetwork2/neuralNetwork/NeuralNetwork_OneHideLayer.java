@@ -283,14 +283,14 @@ public class NeuralNetwork_OneHideLayer implements NeuralNetwork {
             }
         }
 
-        for (int i = 0; i < neuronsHide.length; i++)
-            System.out.print(neuronsHide[i].printWeight());
-
-        for (int i = 0; i < neuronsOutput.length; i++)
-            System.out.print(neuronsOutput[i].printWeight());
-
-        System.out.println();
-        System.out.println();
+//        for (int i = 0; i < neuronsHide.length; i++)
+//            System.out.print(neuronsHide[i].printWeight());
+//
+//        for (int i = 0; i < neuronsOutput.length; i++)
+//            System.out.print(neuronsOutput[i].printWeight());
+//
+//        System.out.println();
+//        System.out.println();
 
     }
 

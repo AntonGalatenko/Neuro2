@@ -7,11 +7,11 @@ public class MyFileChooser extends JFrame {
 
     private String path;
 
-    public MyFileChooser(){
+    public MyFileChooser(String value){
         JFileChooser chooser = new JFileChooser();
 
-        chooser.setCurrentDirectory(new File("D:\\MyJava\\workspace_Idea\\Neuro2\\NeuronImg\\img"));
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setCurrentDirectory(new File(value));
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.showOpenDialog(this);
 
