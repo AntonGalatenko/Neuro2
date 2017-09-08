@@ -1,4 +1,4 @@
-package com.toxa.neuralNetwork2.neuralNetwork;
+package com.toxa.neuralNetwork2.neuralNetwork.neuron;
 
 public class NeuronOutput {
 
@@ -8,7 +8,7 @@ public class NeuronOutput {
     public NeuronOutput(int numberWeight){
         weight = new double[numberWeight];
         deltaWeight = new double[numberWeight];
-//        randomizeWeight();
+        randomizeWeight();
     }
 
     public void randomizeWeight() {

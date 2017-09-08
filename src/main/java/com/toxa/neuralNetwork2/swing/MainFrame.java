@@ -14,9 +14,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class MainFrame extends  JFrame{
+public class MainFrame extends JFrame{
 
-    private String path;
+    private final String PATH = "D:\\MyJava\\workspace_Idea\\Neuro2\\NeuronImg\\img";
     private NeuralNetwork neuralNetwork;
     private MyFileChooser myFileChooser;
     private JPanel mainPanel;
@@ -28,22 +28,24 @@ public class MainFrame extends  JFrame{
     private JLabel resultLabel;
     private JPanel listPanel;
     private JList filesList;
+    private GraphicPanel grPanel;
 
     public MainFrame() {
         setTitle("Neural Network 2");
 
         neuralNetwork = new NeuralNetwork_OneHideLayer(10);
         neuralNetwork.loadWeight();
+        grPanel = new GraphicPanel();
 
-        path = "D:\\MyJava\\workspace_Idea\\Neuro2\\NeuronImg\\img";
-        filesList.setModel(getListModel(path));
+        filesList.setModel(getListModel(PATH));
 
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                myFileChooser = new MyFileChooser(path);
-                path = myFileChooser.getPath();
-                filesList.setModel(getListModel(path));
+//                myFileChooser = new MyFileChooser(path);
+//                path = myFileChooser.getPath();
+//                filesList.setModel(getListModel(path));
+                grPanel = new GraphicPanel();
 
             }
         });
@@ -52,7 +54,7 @@ public class MainFrame extends  JFrame{
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if((! e.getValueIsAdjusting()) && (filesList.getSelectedValue() != null)){
-                        String p = path + "\\" + filesList.getSelectedValue();
+                        String p = PATH + "\\" + filesList.getSelectedValue();
                         imageLabel.setIcon(getImgIcon(p));
                         int[] img = loadIMG(p);
                         String result = neuralNetwork.getResult(img);
@@ -66,6 +68,7 @@ public class MainFrame extends  JFrame{
         add(mainPanel);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         pack();
         revalidate();
 

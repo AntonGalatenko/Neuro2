@@ -1,4 +1,4 @@
-package com.toxa.neuralNetwork2.neuralNetwork;
+package com.toxa.neuralNetwork2.neuralNetwork.neuron;
 
 public class NeuronHide {
     private double[] weight;
@@ -7,7 +7,7 @@ public class NeuronHide {
     public NeuronHide(){
         weight = new double[15];
         deltaWeight = new double[15];
-//        randomizeWeight();
+        randomizeWeight();
     }
 
     public void randomizeWeight() {

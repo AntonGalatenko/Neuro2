@@ -1,6 +1,7 @@
 package com.toxa.neuralNetwork2.neuralNetwork;
 
 import com.toxa.neuralNetwork2.Main;
+import com.toxa.neuralNetwork2.neuralNetwork.neuron.NeuronHide;
 
 public class NeuralNetwork_NoHideLayer {
 

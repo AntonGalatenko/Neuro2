@@ -3,12 +3,15 @@ package com.toxa.neuralNetwork2;
 import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_ManyHideLayer;
 import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_NoHideLayer;
 import com.toxa.neuralNetwork2.neuralNetwork.NeuralNetwork_OneHideLayer;
-import com.toxa.neuralNetwork2.swing.MainFrame;
+import com.toxa.neuralNetwork2.swing.GraphicPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Main {
@@ -19,10 +22,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        MainFrame mainFrame = new MainFrame();
+//        MainFrame mainFrame = new MainFrame();
 //
 //        oneHideLayerFinal();
-//        oneHideLayer();
+        oneHideLayer();
 //        noHideLayer();
 //        manyHideLayer(2);
 //
@@ -110,6 +113,18 @@ public class Main {
         System.out.println();
 
         neuralNetworkOneHideLayer.saveWeight();
+
+
+        ArrayList<HashMap> arrayList = neuralNetworkOneHideLayer.getArrayHashMapList();
+        new GraphicPanel(arrayList);
+
+        ArrayList<double[]> ar = neuralNetworkOneHideLayer.getWeightList();
+        System.out.println();
+        System.out.println("weight");
+        for(int i = 0; i < ar.size(); i++)
+            System.out.println(Arrays.toString(ar.get(i)));
+
+
     }
 
     private static void oneHideLayerFinal(){
